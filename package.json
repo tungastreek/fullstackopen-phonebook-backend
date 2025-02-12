@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "lint": "eslint .",
     "build:ui": "rm -rf dist && cd ../../submission/part2/phonebook/ && npm run build && cp -r dist ../../../backend-submission/phonebook/",
     "deploy": "fly deploy",
     "deploy:full": "npm run build:ui && npm run deploy",
