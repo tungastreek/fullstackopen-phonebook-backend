@@ -37,7 +37,7 @@ app.get("/api/persons", (req, res) => {
   });
 });
 
-app.post("/api/persons", (req, res) => {
+app.post("/api/persons", (req, res, next) => {
   const body = req.body;
   if (!body.name) {
     return res.status(400).json({error: "Name is required"});
@@ -54,9 +54,13 @@ app.post("/api/persons", (req, res) => {
       name: body.name,
       number: body.number,
     });
-    newPerson.save().then((savedPerson) => {
-      res.json(savedPerson);
-    });
+    newPerson.save()
+      .then((savedPerson) => {
+        res.json(savedPerson);
+      })
+      .catch((error) => {
+        next(error);
+      })
   });
 });
 
@@ -90,9 +94,13 @@ app.put("/api/persons/:id", (req, res, next) => {
       }
       person.name = body.name;
       person.number = body.number;
-      person.save().then((savedPerson) => {
-        res.json(savedPerson);
-      });
+      person.save()
+        .then((savedPerson) => {
+          res.json(savedPerson);
+        })
+        .catch((error) => {
+          next(error);
+        });
     })
     .catch((err) => {
       next(err);
@@ -116,10 +124,14 @@ const errorHandler = (err, req, res, next) => {
     return res.status(400).json({error: "Malformed id"});
   }
 
+  if (err.name === "ValidationError") {
+    return res.status(400).json({error: `Validation error: ${err.message}`});
+  }
+
   next(err);
 }
 
-app.use(errorHandler)
+app.use(errorHandler);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
