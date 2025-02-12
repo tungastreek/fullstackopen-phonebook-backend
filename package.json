@@ -15,14 +15,18 @@
   "author": "Le Son Tung",
   "license": "ISC",
   "dependencies": {
+    "@eslint/js": "^9.20.0",
+    "@stylistic/eslint-plugin-js": "^3.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
+    "eslint": "^9.20.1",
     "express": "^4.21.2",
     "mongoose": "^8.10.0",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
     "@flydotio/dockerfile": "^0.7.4",
+    "globals": "^15.14.0",
     "nodemon": "^3.1.9"
   }
 }
